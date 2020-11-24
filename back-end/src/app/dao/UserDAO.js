@@ -6,6 +6,12 @@ class UserDAO {
 
     return result.rows;
   }
+
+  async getUser(email) {
+    const result = await Connection.pool.query(`SELECT * FROM school.user WHERE email = '${email}'`);
+
+    return result.rows[0];
+  }
 }
 
 export default new UserDAO();
