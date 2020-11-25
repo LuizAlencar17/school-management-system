@@ -2,12 +2,11 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Counter from './components/Counter';
-import Card from './components/Card';
+import App from './app';
 
 ReactDOM.render(
   <>
-  <Card tittle="Contador"><Counter step={10} value={0}/></Card>
+  <App/>
   </>,
   document.getElementById('root')
 )
