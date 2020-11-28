@@ -1,0 +1,93 @@
+.button {
+    -webkit-appearance: none;
+    width: auto;
+    min-width: 100px;
+    border-radius: 24px;
+    text-align: center;
+    padding: 15px 40px;
+    background-color: var(--orange_level_1);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.13);
+    border: none;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    outline: 0;
+    margin: 10px 20px 10px auto;
+    display: block;
+}
+
+span .link {
+    padding: 15px 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.link {
+    padding: 15px 10px;
+    text-decoration: none;
+    color: var(--orange_level_1);
+}
+
+
+.button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+  
+.button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+  
+.button:hover span {
+    padding-right: 25px;
+}
+  
+.button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 700px;
+    border-radius: 10px;
+    border: 2px solid var(--colorShadeA);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    background-color: var(--black_level_2);
+}
+
+.LoginInput i{
+    margin-right: 10px;
+}
+
+.LoginInput input{
+    margin-bottom: 30px;
+    width: 50%;
+    height: 35px;
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: rgba(102, 102, 102, 0.048);
+    border-radius: 2px;
+    color: white;
+}
+
+.LoginInput input:focus {
+    outline: none;
+    border-bottom: 1px solid var(--orange_level_1);
+}
+
+.LoginForm {
+    padding-top: 50px;
+}

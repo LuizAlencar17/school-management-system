@@ -18,12 +18,10 @@ class UserController {
 
     try {
       var user = await UserDAO.getUser(email);
-      var password_hash = await bcrypt.hash(password, 8);
   
-      if(bcrypt.compare(password_hash, user.password)){
+      if(await bcrypt.compare(password, user.password)){
         return res.status(200).json({
-          user: user,
-          token: jwt.sign({ iduser: user.iduser }, process.env.SECRET),
+          token: jwt.sign({ user: user }, process.env.SECRET),
         });
         
       }else{
@@ -43,12 +41,20 @@ class UserController {
       req.body.age,
       req.body.genre,
       req.body.status,
-      );
+    );
 
     var result = await UserDAO.register(userModel);
-    var message = "";
     if(result){
       return res.status(200).send("User successfully registered");
+    }else{
+      return res.status(400).send("User not registered");
+    }
+  }
+
+  async getClassByUser (req, res) {
+    var result = await UserDAO.getClassByUser(req.body.id);
+    if(result){
+      return res.status(200).send(result);
     }else{
       return res.status(400).send("User not registered");
     }

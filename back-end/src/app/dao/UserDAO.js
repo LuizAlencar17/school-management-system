@@ -23,6 +23,31 @@ class UserDAO {
         '${userModel.genre}', 
         '${userModel.status}')`
       );
+      return result;
+  }
+
+  async getClassByUser(iduser) {
+      const result = await Connection.pool.query(`
+      SELECT 
+        us.name as teacher,
+        cl.name,
+        cl.code,
+        cd.evaluation1, 
+        cd.evaluation2, 
+        cd.evaluation3,
+        cd.status
+      FROM 
+        school.class_details cd, 
+        school.class cl, 
+        school.user us
+      WHERE 
+        cd.idstudent = ${iduser} 
+      AND 
+        cl.idclass = cd.idclass
+      AND 
+        us.iduser = cl.idteacher
+      `)
+      return result.rows;
   }
 }
 

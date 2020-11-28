@@ -21,15 +21,15 @@ export default class Counter extends React.Component {
     render() {
         return (
             <div>
-                <label for="stepInput" >Step: </label>
+                <label>Step: </label>
                 <input id="stepInput" type="number" 
                     value={this.state.step} 
                     onChange={e => this.setState({step: +e.target.value})}>
                 </input>
 
                 <p>Value: {this.state.value}</p>
-                <button class="big-button" onClick={this.increment}>+</button>
-                <button class="big-button" onClick={this.decrement}>-</button>
+                <button className="big-button" onClick={this.increment}>+</button>
+                <button className="big-button" onClick={this.decrement}>-</button>
             </div>
         )
     }

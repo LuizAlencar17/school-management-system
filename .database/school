@@ -1,0 +1,660 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.4
+-- Dumped by pg_dump version 12.4
+
+-- Started on 2020-11-28 20:16:14
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 4 (class 2615 OID 2200)
+-- Name: school; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA school;
+
+
+ALTER SCHEMA school OWNER TO postgres;
+
+--
+-- TOC entry 2909 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA school; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA school IS 'standard public schema';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 217 (class 1259 OID 24769)
+-- Name: class; Type: TABLE; Schema: school; Owner: postgres
+--
+
+CREATE TABLE school.class (
+    idclass integer NOT NULL,
+    idteacher integer NOT NULL,
+    idschool integer NOT NULL,
+    name character varying(100) NOT NULL,
+    code character varying(8) NOT NULL,
+    status character varying(1) NOT NULL
+);
+
+
+ALTER TABLE school.class OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 24777)
+-- Name: class_details; Type: TABLE; Schema: school; Owner: postgres
+--
+
+CREATE TABLE school.class_details (
+    idclass_details integer NOT NULL,
+    idclass integer NOT NULL,
+    idstudent integer NOT NULL,
+    evaluation1 double precision NOT NULL,
+    evaluation2 real NOT NULL,
+    evaluation3 real NOT NULL,
+    status character varying(1) NOT NULL
+);
+
+
+ALTER TABLE school.class_details OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 24775)
+-- Name: class_details_idclass_details_seq; Type: SEQUENCE; Schema: school; Owner: postgres
+--
+
+CREATE SEQUENCE school.class_details_idclass_details_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE school.class_details_idclass_details_seq OWNER TO postgres;
+
+--
+-- TOC entry 2910 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: class_details_idclass_details_seq; Type: SEQUENCE OWNED BY; Schema: school; Owner: postgres
+--
+
+ALTER SEQUENCE school.class_details_idclass_details_seq OWNED BY school.class_details.idclass_details;
+
+
+--
+-- TOC entry 216 (class 1259 OID 24767)
+-- Name: class_idclass_seq; Type: SEQUENCE; Schema: school; Owner: postgres
+--
+
+CREATE SEQUENCE school.class_idclass_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE school.class_idclass_seq OWNER TO postgres;
+
+--
+-- TOC entry 2911 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: class_idclass_seq; Type: SEQUENCE OWNED BY; Schema: school; Owner: postgres
+--
+
+ALTER SEQUENCE school.class_idclass_seq OWNED BY school.class.idclass;
+
+
+--
+-- TOC entry 207 (class 1259 OID 16472)
+-- Name: test1; Type: TABLE; Schema: school; Owner: postgres
+--
+
+CREATE TABLE school.test1 (
+    idpessoa integer NOT NULL
+);
+
+
+ALTER TABLE school.test1 OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 16470)
+-- Name: pessoa_idpessoa_seq; Type: SEQUENCE; Schema: school; Owner: postgres
+--
+
+CREATE SEQUENCE school.pessoa_idpessoa_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE school.pessoa_idpessoa_seq OWNER TO postgres;
+
+--
+-- TOC entry 2912 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: pessoa_idpessoa_seq; Type: SEQUENCE OWNED BY; Schema: school; Owner: postgres
+--
+
+ALTER SEQUENCE school.pessoa_idpessoa_seq OWNED BY school.test1.idpessoa;
+
+
+--
+-- TOC entry 221 (class 1259 OID 24785)
+-- Name: schedule; Type: TABLE; Schema: school; Owner: postgres
+--
+
+CREATE TABLE school.schedule (
+    idschedule integer NOT NULL,
+    idclass integer NOT NULL,
+    start_time time without time zone NOT NULL,
+    end_time time without time zone NOT NULL,
+    week_day character varying(15) NOT NULL
+);
+
+
+ALTER TABLE school.schedule OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 24783)
+-- Name: schedule_idschedule_seq; Type: SEQUENCE; Schema: school; Owner: postgres
+--
+
+CREATE SEQUENCE school.schedule_idschedule_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE school.schedule_idschedule_seq OWNER TO postgres;
+
+--
+-- TOC entry 2913 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: schedule_idschedule_seq; Type: SEQUENCE OWNED BY; Schema: school; Owner: postgres
+--
+
+ALTER SEQUENCE school.schedule_idschedule_seq OWNED BY school.schedule.idschedule;
+
+
+--
+-- TOC entry 215 (class 1259 OID 24761)
+-- Name: school; Type: TABLE; Schema: school; Owner: postgres
+--
+
+CREATE TABLE school.school (
+    idschool integer NOT NULL,
+    name character varying(100) NOT NULL,
+    address character varying(255) NOT NULL,
+    status character varying(1) NOT NULL
+);
+
+
+ALTER TABLE school.school OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 24759)
+-- Name: school_idschool_seq; Type: SEQUENCE; Schema: school; Owner: postgres
+--
+
+CREATE SEQUENCE school.school_idschool_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE school.school_idschool_seq OWNER TO postgres;
+
+--
+-- TOC entry 2914 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: school_idschool_seq; Type: SEQUENCE OWNED BY; Schema: school; Owner: postgres
+--
+
+ALTER SEQUENCE school.school_idschool_seq OWNED BY school.school.idschool;
+
+
+--
+-- TOC entry 209 (class 1259 OID 16487)
+-- Name: test2; Type: TABLE; Schema: school; Owner: postgres
+--
+
+CREATE TABLE school.test2 (
+    idusuario integer NOT NULL
+);
+
+
+ALTER TABLE school.test2 OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 24753)
+-- Name: user; Type: TABLE; Schema: school; Owner: postgres
+--
+
+CREATE TABLE school."user" (
+    iduser integer NOT NULL,
+    email character varying(100) NOT NULL,
+    password character varying(100) NOT NULL,
+    name character varying(50) NOT NULL,
+    age date NOT NULL,
+    genre character varying(1) NOT NULL,
+    status character varying(1) NOT NULL
+);
+
+
+ALTER TABLE school."user" OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 24751)
+-- Name: user_iduser_seq; Type: SEQUENCE; Schema: school; Owner: postgres
+--
+
+CREATE SEQUENCE school.user_iduser_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE school.user_iduser_seq OWNER TO postgres;
+
+--
+-- TOC entry 2915 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: user_iduser_seq; Type: SEQUENCE OWNED BY; Schema: school; Owner: postgres
+--
+
+ALTER SEQUENCE school.user_iduser_seq OWNED BY school."user".iduser;
+
+
+--
+-- TOC entry 208 (class 1259 OID 16485)
+-- Name: usuario_idusuario_seq; Type: SEQUENCE; Schema: school; Owner: postgres
+--
+
+CREATE SEQUENCE school.usuario_idusuario_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE school.usuario_idusuario_seq OWNER TO postgres;
+
+--
+-- TOC entry 2916 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: usuario_idusuario_seq; Type: SEQUENCE OWNED BY; Schema: school; Owner: postgres
+--
+
+ALTER SEQUENCE school.usuario_idusuario_seq OWNED BY school.test2.idusuario;
+
+
+--
+-- TOC entry 2740 (class 2604 OID 24772)
+-- Name: class idclass; Type: DEFAULT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.class ALTER COLUMN idclass SET DEFAULT nextval('school.class_idclass_seq'::regclass);
+
+
+--
+-- TOC entry 2741 (class 2604 OID 24780)
+-- Name: class_details idclass_details; Type: DEFAULT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.class_details ALTER COLUMN idclass_details SET DEFAULT nextval('school.class_details_idclass_details_seq'::regclass);
+
+
+--
+-- TOC entry 2742 (class 2604 OID 24788)
+-- Name: schedule idschedule; Type: DEFAULT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.schedule ALTER COLUMN idschedule SET DEFAULT nextval('school.schedule_idschedule_seq'::regclass);
+
+
+--
+-- TOC entry 2739 (class 2604 OID 24764)
+-- Name: school idschool; Type: DEFAULT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.school ALTER COLUMN idschool SET DEFAULT nextval('school.school_idschool_seq'::regclass);
+
+
+--
+-- TOC entry 2736 (class 2604 OID 16475)
+-- Name: test1 idpessoa; Type: DEFAULT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.test1 ALTER COLUMN idpessoa SET DEFAULT nextval('school.pessoa_idpessoa_seq'::regclass);
+
+
+--
+-- TOC entry 2737 (class 2604 OID 16490)
+-- Name: test2 idusuario; Type: DEFAULT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.test2 ALTER COLUMN idusuario SET DEFAULT nextval('school.usuario_idusuario_seq'::regclass);
+
+
+--
+-- TOC entry 2738 (class 2604 OID 24756)
+-- Name: user iduser; Type: DEFAULT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school."user" ALTER COLUMN iduser SET DEFAULT nextval('school.user_iduser_seq'::regclass);
+
+
+--
+-- TOC entry 2899 (class 0 OID 24769)
+-- Dependencies: 217
+-- Data for Name: class; Type: TABLE DATA; Schema: school; Owner: postgres
+--
+
+COPY school.class (idclass, idteacher, idschool, name, code, status) FROM stdin;
+1	2	1	FTC	9843	T
+\.
+
+
+--
+-- TOC entry 2901 (class 0 OID 24777)
+-- Dependencies: 219
+-- Data for Name: class_details; Type: TABLE DATA; Schema: school; Owner: postgres
+--
+
+COPY school.class_details (idclass_details, idclass, idstudent, evaluation1, evaluation2, evaluation3, status) FROM stdin;
+1	1	14	8.7	0	0	T
+\.
+
+
+--
+-- TOC entry 2903 (class 0 OID 24785)
+-- Dependencies: 221
+-- Data for Name: schedule; Type: TABLE DATA; Schema: school; Owner: postgres
+--
+
+COPY school.schedule (idschedule, idclass, start_time, end_time, week_day) FROM stdin;
+1	1	14:00:00	16:00:00	'monday'
+2	1	14:00:00	16:00:00	'friday'
+\.
+
+
+--
+-- TOC entry 2897 (class 0 OID 24761)
+-- Dependencies: 215
+-- Data for Name: school; Type: TABLE DATA; Schema: school; Owner: postgres
+--
+
+COPY school.school (idschool, name, address, status) FROM stdin;
+1	Universidade do Estado do Amazonas	Av. Djalma Batista, 2470	T
+\.
+
+
+--
+-- TOC entry 2891 (class 0 OID 16472)
+-- Dependencies: 207
+-- Data for Name: test1; Type: TABLE DATA; Schema: school; Owner: postgres
+--
+
+COPY school.test1 (idpessoa) FROM stdin;
+1
+2
+3
+4
+5
+7
+\.
+
+
+--
+-- TOC entry 2893 (class 0 OID 16487)
+-- Dependencies: 209
+-- Data for Name: test2; Type: TABLE DATA; Schema: school; Owner: postgres
+--
+
+COPY school.test2 (idusuario) FROM stdin;
+1
+\.
+
+
+--
+-- TOC entry 2895 (class 0 OID 24753)
+-- Dependencies: 213
+-- Data for Name: user; Type: TABLE DATA; Schema: school; Owner: postgres
+--
+
+COPY school."user" (iduser, email, password, name, age, genre, status) FROM stdin;
+2	fabio.alencar644@gmail.com	$2a$08$E4Z0NT2jRzSVBPX9lG7zi.liIXFKkdC3b0HYHQUt6TWe3QjmNGcIK	Luiz Fabio Bailosa de Alencar	1999-06-14	M	T
+6	rafaela.melo@gmail.com	$2a$08$E4Z0NT2jRzSVBPX9lG7zi.liIXFKkdC3b0HYHQUt6TWe3QjmNGcIK	Rafaela Melo Ferreira	1999-06-14	F	T
+12	rafaela.silva@gmail.com	$2a$08$I8Lw6n28MElUtF8YAGwK2uLBUJfeAyBCn1bX1Wrn2mBn45O5yW0iC	Rafaela Silva Ferreira	1999-06-14	F	T
+14	rafaela.cunha@gmail.com	$2a$08$tVDrj7USY5XBkBtJCw/XEun8/aldAHYRyXuwSgixGPsAM94ZjmoHu	Rafaela Cunhas Ferreira	1999-06-14	F	T
+15	test.test@gmail.com	$2a$08$iuAdA4FBHNVSEKBYl//fIuZnB1O56BEN/KrMhcrfQ6iColz./tQ02	Test Test Test	1999-06-14	F	T
+17	test.test2@gmail.com	$2a$08$zxuNhmhNm3ARLucWoWQDO.n0KdiXReF0Slmh5ks172CZzw2XulMFG	Test Test Test	1999-06-14	F	T
+18	test.test3@gmail.com	$2a$08$WeMnaDvcI6VoVtlRzQFTFelX9C9ul.7.3IpB.57fwcSG/eWhmfLMy	Test Test Test	1999-06-14	F	T
+19	test.test4@gmail.com	$2a$08$4t/760q14aC58JosuXghTOcA47awbkRFSMbsb3o80Jic1tMI/HiP6	Test Test Test	1999-06-14	F	T
+20	test.test5@gmail.com	$2a$08$JLD8CQShzdUTDX4JUdue0eYix14UVHpugVNZdNvDwhyla84W9uefu	Test Test Test	1999-04-14	F	T
+21	test.test6@gmail.com	$2a$08$OpFCr0evn9CuvMD3PqYYkuO.4ViuN3pQ3Ej4iy0pyjBsvS5.zfxGy	Luiz Fabio	1999-09-14	M	T
+\.
+
+
+--
+-- TOC entry 2917 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: class_details_idclass_details_seq; Type: SEQUENCE SET; Schema: school; Owner: postgres
+--
+
+SELECT pg_catalog.setval('school.class_details_idclass_details_seq', 1, false);
+
+
+--
+-- TOC entry 2918 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: class_idclass_seq; Type: SEQUENCE SET; Schema: school; Owner: postgres
+--
+
+SELECT pg_catalog.setval('school.class_idclass_seq', 1, false);
+
+
+--
+-- TOC entry 2919 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: pessoa_idpessoa_seq; Type: SEQUENCE SET; Schema: school; Owner: postgres
+--
+
+SELECT pg_catalog.setval('school.pessoa_idpessoa_seq', 5, true);
+
+
+--
+-- TOC entry 2920 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: schedule_idschedule_seq; Type: SEQUENCE SET; Schema: school; Owner: postgres
+--
+
+SELECT pg_catalog.setval('school.schedule_idschedule_seq', 1, false);
+
+
+--
+-- TOC entry 2921 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: school_idschool_seq; Type: SEQUENCE SET; Schema: school; Owner: postgres
+--
+
+SELECT pg_catalog.setval('school.school_idschool_seq', 1, true);
+
+
+--
+-- TOC entry 2922 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: user_iduser_seq; Type: SEQUENCE SET; Schema: school; Owner: postgres
+--
+
+SELECT pg_catalog.setval('school.user_iduser_seq', 21, true);
+
+
+--
+-- TOC entry 2923 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: usuario_idusuario_seq; Type: SEQUENCE SET; Schema: school; Owner: postgres
+--
+
+SELECT pg_catalog.setval('school.usuario_idusuario_seq', 1, false);
+
+
+--
+-- TOC entry 2756 (class 2606 OID 24782)
+-- Name: class_details class_details_pk; Type: CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.class_details
+    ADD CONSTRAINT class_details_pk PRIMARY KEY (idclass_details);
+
+
+--
+-- TOC entry 2754 (class 2606 OID 24774)
+-- Name: class class_pk; Type: CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.class
+    ADD CONSTRAINT class_pk PRIMARY KEY (idclass);
+
+
+--
+-- TOC entry 2748 (class 2606 OID 24817)
+-- Name: user iduser; Type: CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school."user"
+    ADD CONSTRAINT iduser UNIQUE (email);
+
+
+--
+-- TOC entry 2744 (class 2606 OID 16477)
+-- Name: test1 pessoa_pkey; Type: CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.test1
+    ADD CONSTRAINT pessoa_pkey PRIMARY KEY (idpessoa);
+
+
+--
+-- TOC entry 2758 (class 2606 OID 24790)
+-- Name: schedule schedule_pk; Type: CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.schedule
+    ADD CONSTRAINT schedule_pk PRIMARY KEY (idschedule);
+
+
+--
+-- TOC entry 2752 (class 2606 OID 24766)
+-- Name: school school_pk; Type: CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.school
+    ADD CONSTRAINT school_pk PRIMARY KEY (idschool);
+
+
+--
+-- TOC entry 2750 (class 2606 OID 24758)
+-- Name: user user_pk; Type: CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school."user"
+    ADD CONSTRAINT user_pk PRIMARY KEY (iduser);
+
+
+--
+-- TOC entry 2746 (class 2606 OID 16492)
+-- Name: test2 usuario_pkey; Type: CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.test2
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (idusuario);
+
+
+--
+-- TOC entry 2761 (class 2606 OID 24801)
+-- Name: class_details class_details_fk0; Type: FK CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.class_details
+    ADD CONSTRAINT class_details_fk0 FOREIGN KEY (idclass) REFERENCES school.class(idclass);
+
+
+--
+-- TOC entry 2762 (class 2606 OID 24806)
+-- Name: class_details class_details_fk1; Type: FK CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.class_details
+    ADD CONSTRAINT class_details_fk1 FOREIGN KEY (idstudent) REFERENCES school."user"(iduser);
+
+
+--
+-- TOC entry 2759 (class 2606 OID 24791)
+-- Name: class class_fk0; Type: FK CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.class
+    ADD CONSTRAINT class_fk0 FOREIGN KEY (idteacher) REFERENCES school."user"(iduser);
+
+
+--
+-- TOC entry 2760 (class 2606 OID 24796)
+-- Name: class class_fk1; Type: FK CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.class
+    ADD CONSTRAINT class_fk1 FOREIGN KEY (idschool) REFERENCES school.school(idschool);
+
+
+--
+-- TOC entry 2763 (class 2606 OID 24811)
+-- Name: schedule schedule_fk0; Type: FK CONSTRAINT; Schema: school; Owner: postgres
+--
+
+ALTER TABLE ONLY school.schedule
+    ADD CONSTRAINT schedule_fk0 FOREIGN KEY (idclass) REFERENCES school.class(idclass);
+
+
+-- Completed on 2020-11-28 20:16:15
+
+--
+-- PostgreSQL database dump complete
+--
+
