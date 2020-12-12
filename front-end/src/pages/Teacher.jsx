@@ -21,6 +21,7 @@ export default class Teacher extends React.Component {
       let val = event.target.value;
       this.setState({[nam]: val});
     }
+  
     async addNewStudent (idclass) {
       console.log(this.state.emailForNewStudent)
       var data = await axios.post(process.env.REACT_APP_URL+'/link-student-to-a-class', {
