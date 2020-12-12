@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import { Link } from 'react-router-dom';
 
 import '../components/css/Login.css';
@@ -20,12 +21,18 @@ export default class Login extends React.Component {
     }
     login = () => {
       axios.post(process.env.REACT_APP_URL+'/login', {
-        email: 'rafaela.cunha@gmail.com',
-        password: '123456'
+        email: this.state.email,
+        password: this.state.password
       })
       .then(function (response) {
         localStorage.setItem('token', response.data.token);
-        window.location.replace("/student");
+        var decoded = jwt.verify(localStorage.getItem('token'), process.env.REACT_APP_ACCESS_TOKEN);
+        var decodedUser = decoded.user;
+        if(decodedUser.profile === 'Student' ){
+          window.location.replace("/student");
+        }else{
+          window.location.replace("/teacher");
+        }
       })
       .catch(function (error) {
         console.log(error);

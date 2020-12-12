@@ -41,6 +41,7 @@ class UserController {
       req.body.age,
       req.body.genre,
       req.body.status,
+      req.body.profile,
     );
 
     var result = await UserDAO.register(userModel);
@@ -59,6 +60,21 @@ class UserController {
       return res.status(400).send("User not registered");
     }
   }
-}
 
+  async linkStudentToClass (req, res) {
+    const { email, idclass } = req.body;
+    var user = await UserDAO.getUser(email);
+    if(await UserDAO.checkIfStudentLinkedToClass(idclass, user.iduser)){
+      return res.status(400).send('This student is already in that class!');
+    }
+    try{
+      var result = await UserDAO.linkStudentToClass(idclass, user.iduser);
+      return res.status(200).send('Student successfully linked!');
+    }catch (e) {
+      return res.status(400).send('An error has occurred. Check if the email is correct!');
+    }
+  }
+
+  
+}
 export default new UserController();

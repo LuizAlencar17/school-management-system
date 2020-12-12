@@ -81,7 +81,7 @@ export default class Register extends React.Component {
                 <i className="material-icons">vpn_key</i>
                     <input
                         type='password'
-                        name='password'
+                        name='password_again'
                         onChange={this.myChangeHandler}
                         placeholder=' Password again'
                     /><div id="line"></div>​

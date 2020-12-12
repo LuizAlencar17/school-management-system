@@ -34,7 +34,7 @@ body {
   color: #FFB800;
 }
 
-table {
+table, .modal-content {
   border-collapse: collapse; 
   font-family: arial, sans-serif;
   background-color: var(--black_level_2);

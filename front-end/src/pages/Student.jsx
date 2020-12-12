@@ -33,7 +33,7 @@ export default class Student extends React.Component {
                 <a href="https://syncfiddle.net/fiddle/-MNAxG-dijOti95K1o3b" className="logo"><b>ODUS SYSTEM</b></a>
             </div>
 
-            <h1 className="name">Hello, Rafaela! </h1>
+            <h1 className="name">Hello, {this.state.decodedUser.name}! </h1>
             <h1 className="title">Your classes</h1>
             
             <table>

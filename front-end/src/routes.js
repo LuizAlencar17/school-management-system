@@ -2,6 +2,7 @@ import React from 'react';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Student from './pages/Student';
+import Teacher from './pages/Teacher';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { isAuthenticated } from "./auth";
 
@@ -24,6 +25,7 @@ export const Routes = () => {
             <Route path="/" component={Login} exact/>
             <Route path="/register" component={Register}/>
             <PrivateRoute path="/student" component={Student}/>
+            <PrivateRoute path="/teacher" component={Teacher}/>
         </Switch>
     );
 };

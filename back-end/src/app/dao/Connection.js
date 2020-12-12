@@ -1,13 +1,14 @@
 require("dotenv-safe").config();
+const pg = require('pg');
 
 class Connection {
   constructor() {
-    this.pool = new require('pg').Pool({
-      user: process.env.USER,
-      host: process.env.HOST,
-      database: process.env.DATABASE,
-      password: process.env.PASSWORD,
-      port: process.env.PORT
+    this.pool = new pg.Pool({
+      user: 'postgres',
+      host: 'localhost',
+      database: 'school',
+      password: '12345678',
+      port: 5432,
     });
   }
 }
