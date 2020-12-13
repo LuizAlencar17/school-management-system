@@ -13,6 +13,8 @@ export default class Teacher extends React.Component {
         informationClass: [{}],
         decodedUser: decoded.user,
         emailForNewStudent: '',
+        nameForNewClass: '',
+        idClassCurrent: 0,
       };
       this.getClassInformation();
     }
@@ -22,24 +24,33 @@ export default class Teacher extends React.Component {
       this.setState({[nam]: val});
     }
   
-    async addNewStudent (idclass) {
-      console.log(this.state.emailForNewStudent)
-      var data = await axios.post(process.env.REACT_APP_URL+'/link-student-to-a-class', {
-        idclass: idclass,
+    async addNewStudent () {
+      await axios.post(process.env.REACT_APP_URL+'/link-student-to-a-class', {
+        idclass: this.state.idClassCurrent,
         email: this.state.emailForNewStudent
       });
       window.location.replace("/teacher");
     }
     async addNewClass () {
-      
+      await axios.post(process.env.REACT_APP_URL+'/create-class', {
+        idteacher: this.state.decodedUser.iduser,
+        name: this.state.nameForNewClass
+      });
+      window.location.replace("/teacher");
     }
-    openModal (idclass) {
-      var modal = document.getElementById("myModal");
+    async deleteClass () {
+      await axios.post(process.env.REACT_APP_URL+'/delete-class', {
+        idclass: this.state.idClassCurrent,
+      });
+      window.location.replace("/teacher");
+    }
+    openModal (modalString) {
+      var modal = document.getElementById(modalString);
       modal.style.display = "block";
       
     }
-    closeModal () {
-      var modal = document.getElementById("myModal");
+    closeModal (modalString) {
+      var modal = document.getElementById(modalString);
       modal.style.display = "none";
     }
     async getClassInformation () {
@@ -64,11 +75,11 @@ export default class Teacher extends React.Component {
             ))
           }
           <tr className="tr-end">
-            <th>..</th>
-            <th>..</th>
-            <th>..</th>
-            <th>..</th>
-            <th>..</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
           </>
         }catch(e){
@@ -81,11 +92,44 @@ export default class Teacher extends React.Component {
                 <a href="https://syncfiddle.net/fiddle/-MNAxG-dijOti95K1o3b" className="logo"><b>ODUS SYSTEM</b></a>
             </div>
             <h1 className="name">Hello, {this.state.decodedUser.name}! </h1>
-            <button className="button" onClick={() => this.addNewClass()}><span>Add Class</span></button>
+            
+            <button className="button" onClick={() => this.openModal('modalNewClass')}><span>Add Class</span></button>
+            
+            <div id="modalNewClass" className="modal">
+'             <div className="modal-content">
+                <span className="close" onClick={() => this.closeModal('modalNewClass')}>&times;</span>
+                <p>Enter class name</p>
+                <div className='LoginInput'>
+                <i className="material-icons">book</i>
+                    <input
+                        type='text'
+                        name='nameForNewClass'
+                        onChange={this.myChangeHandler}
+                        placeholder='  Name'
+                    />
+                </div>
+                <button className="button" onClick={() => this.addNewClass()}><span>Create</span></button>
+              </div>
+            </div>
+
             {
               this.state.informationClass.map(row => (
               <div id={row.idclass}>
                 <h1 className="title">{row.name}</h1>
+                
+                <button id="delete" className="button" onClick={() => { this.openModal('modalDeleteClass'); this.setState({idClassCurrent: row.idclass});}}>
+                  <span>Delete class</span>
+                </button>
+                  
+                <div id="modalDeleteClass" className="modal">
+                  <div className="modal-content">
+                    <span className="close"  onClick={() => this.closeModal('modalDeleteClass')}>&times;</span>
+                    <p>Are you sure you want to delete this class? you will lose all data related to notes</p>
+                    <button className="button" onClick={() => this.deleteClass()}><span>Yes</span></button>
+                    <button className="button" onClick={() => this.closeModal('modalDeleteClass')}><span>Cancel</span></button>
+                  </div>
+                </div>
+
                 <table>
                 <tr className="column">
                     <th>Student</th>
@@ -96,26 +140,32 @@ export default class Teacher extends React.Component {
                 </tr>
                 {checkStudents(row.students)}
                 </table>
-                <button className="button" onClick={() => this.openModal()} ><span>Add Student</span></button>
-                <div id="myModal" className="modal">
-                  <div className="modal-content">
-                    <span className="close" onClick={this.closeModal}>&times;</span>
-                    <p>Enter student email</p>
-                    <div className='LoginInput'>
-                    <i className="material-icons">email</i>
-                        <input
-                            type='text'
-                            name='emailForNewStudent'
-                            onChange={this.myChangeHandler}
-                            placeholder='  Email'
-                        />
-                    </div>
-                    <button className="button" onClick={() => this.addNewStudent(row.idclass)}><span>Confirm</span></button>
+                
+              <button className="button" onClick={() => { this.openModal('modalNewStudent'); this.setState({idClassCurrent: row.idclass});}}>
+                <span>Add Student</span>
+              </button>
+                
+              <div id="modalNewStudent" className="modal">
+                <div className="modal-content">
+                  <span className="close"  onClick={() => this.closeModal('modalNewStudent')}>&times;</span>
+                  <p>Enter student email</p>
+                  <div className='LoginInput'>
+                  <i className="material-icons">email</i>
+                      <input
+                          type='text'
+                          name='emailForNewStudent'
+                          onChange={this.myChangeHandler}
+                          placeholder='  Email'
+                      />
                   </div>
+                  <button className="button" onClick={() => this.addNewStudent()}><span>Confirm</span></button>
                 </div>
+              </div>
+
               </div>
             ))
             }
+
           </>
       );
     }

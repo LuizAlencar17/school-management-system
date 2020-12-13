@@ -14,7 +14,32 @@ class ClassController {
       }
       return res.status(200).json(classes);
     }catch(e){
-      res.status(400).send('Error');
+      res.status(400).send('Error. Try again');
+    }
+  }
+
+   async createClass (req, res) {
+    try{
+      // New code
+      var classCode = Math.random().toString(36).substring(8);
+      while(await ClassDAO.checkCode(classCode)){
+        // New code
+        classCode = Math.random().toString(36).substring(8);
+      }
+      req.body['code'] = classCode;
+      await ClassDAO.createClass(req.body);
+      return res.status(200).json('Class successfully created');
+    }catch(e){
+      res.status(400).send('Error. Try again');
+    }
+  }
+
+  async deleteClass (req, res) {
+    try{
+      await ClassDAO.deleteClass(req.body.idclass);
+      return res.status(200).json('Class successfully deleted');
+    }catch(e){
+      res.status(400).send('Error. Try again');
     }
   }
   

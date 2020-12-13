@@ -22,6 +22,8 @@ app.post('/register-user', UserController.register);
 app.post('/get-class-by-user', UserController.getClassByUser);
 app.post('/link-student-to-a-class', UserController.linkStudentToClass);
 app.post('/get-class-information-from-teacher', ClassController.getClassInformationFromTeacher);
+app.post('/create-class', ClassController.createClass);
+app.post('/delete-class', ClassController.deleteClass);
 
 app.use(router);
 
